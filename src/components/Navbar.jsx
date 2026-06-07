@@ -11,7 +11,7 @@ const Navbar = () => {
                     <li><Link href="/">Home</Link></li>
                     <li><Link href="/destinations">Destinations</Link></li>
                     <li><Link href="/my-bookings">My Bookings</Link></li>
-                    <li><Link href="/add-destination">Add Destination</Link></li>
+                    <li><Link href="/Add-Car">Add Car</Link></li>
                 </ul>
                 <div>
                     <Image src="/assets/DriveFleet.png" alt="Logo" width={120} height={80} />
