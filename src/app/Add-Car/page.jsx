@@ -1,7 +1,27 @@
+'use client';
 import { Button, FieldError, Input, Label, TextArea, TextField, Select, ListBox } from '@heroui/react';
 import React from 'react';
 
 const AddCarPage = () => {
+
+    const onsubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const Cars = Object.fromEntries(formData.entries());
+        console.log('New Car:', Cars);
+
+        const res = await fetch(`http://localhost:5000/addcar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(Cars)
+        });
+        const data = await res.json();
+        console.log('Server Response:', data);
+        // redirect('/cars');
+        // toast.success('Car added successfully!');
+    }
     return (
         <div className="mx-auto p-5 max-w-7xl">
             <h1 className="text-3xl font-bold mb-6 text-gray-800">Add a New Car Listing</h1>
@@ -11,7 +31,7 @@ const AddCarPage = () => {
                     <p className="text-white font-medium">Please fill in the car details below</p>
                 </div>
 
-                <form className="p-10 space-y-6">
+                <form className="p-10 space-y-6" onSubmit={onsubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                         {/* Car Name */}
@@ -128,6 +148,7 @@ const AddCarPage = () => {
                     {/* Submit Button */}
                     <div className="pt-4">
                         <Button
+
                             type="submit"
                             className="w-full bg-cyan-500 text-white font-bold py-6 rounded-xl hover:bg-cyan-600 shadow-lg shadow-cyan-200 transition-all active:scale-95 cursor-pointer"
                         >
