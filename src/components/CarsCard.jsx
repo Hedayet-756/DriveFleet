@@ -107,7 +107,7 @@ const CarsCard = ({ car, index = 0 }) => {
 
 
                 <div className="pt-2">
-                    <Link href={`/destinations/${_id}`} className="block">
+                    <Link href={`/All-Car/${_id}`} className="block">
                         <motion.button
                             whileHover={{ scale: 1.02, backgroundColor: "#22d3ee" }}
                             whileTap={{ scale: 0.98 }}
