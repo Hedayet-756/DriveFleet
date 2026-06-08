@@ -1,5 +1,6 @@
 'use client';
 import { Button, FieldError, Input, Label, TextArea, TextField, Select, ListBox } from '@heroui/react';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const AddCarPage = () => {
@@ -19,8 +20,8 @@ const AddCarPage = () => {
         });
         const data = await res.json();
         console.log('Server Response:', data);
-        // redirect('/cars');
-        // toast.success('Car added successfully!');
+        redirect('/All-Car');
+        toast.success('Car added successfully!');
     }
     return (
         <div className="mx-auto p-5 max-w-7xl">
