@@ -12,7 +12,7 @@ export function DeleteCard({ carData }) {
 
     const handleDelete = async () => {
         try {
-            await fetch(`http://localhost:5000/addcar/${carData?._id}`, {
+            const res = await fetch(`http://localhost:5000/addcar/${carData?._id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
