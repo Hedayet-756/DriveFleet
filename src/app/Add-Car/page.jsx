@@ -1,9 +1,11 @@
 'use client';
 import { Button, FieldError, Input, Label, TextArea, TextField, Select, ListBox } from '@heroui/react';
-import { redirect } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const AddCarPage = () => {
+    const router = useRouter();
 
     const onsubmit = async (e) => {
         e.preventDefault();
@@ -11,17 +13,30 @@ const AddCarPage = () => {
         const Cars = Object.fromEntries(formData.entries());
         console.log('New Car:', Cars);
 
-        const res = await fetch(`http://localhost:5000/addcar`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Cars)
-        });
-        const data = await res.json();
-        console.log('Server Response:', data);
-        redirect('/All-Car');
-        toast.success('Car added successfully!');
+        try {
+            const res = await fetch(`http://localhost:5000/addcar`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Cars)
+            });
+
+            if (res.ok) {
+                // ১. প্রথমে টোস্ট মেসেজটি দেখান
+                toast.success('Car Added successfully!');
+
+                // ২. তারপর অল-কার পেজে রিডাইরেক্ট করুন
+                router.push('/All-Car');
+                // ৩. ডেটা রিফ্রেশ করার জন্য (অপশনাল কিন্তু কার্যকরী)
+                router.refresh();
+            } else {
+                toast.error('Failed to Add the car.');
+            }
+        } catch (error) {
+            console.error("Delete Error:", error);
+            toast.error('Something went wrong!');
+        }
     }
     return (
         <div className="mx-auto p-5 max-w-7xl">

@@ -1,33 +1,46 @@
 "use client";
 
-import { authClient } from "@/lib/auth-client";
 import { TrashBin } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 import { LuTrash2 } from "react-icons/lu";
 
-export function DeleteCard({ destination }) {
+export function DeleteCard({ carData }) {
+    const router = useRouter();
 
     const handleDelete = async () => {
-        const { data: tokenData } = await authClient.token();
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destination/${destination._id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${tokenData?.token || ''}`
+        try {
+            await fetch(`http://localhost:5000/addcar/${carData?._id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (res.ok) {
+                // ১. প্রথমে টোস্ট মেসেজটি দেখান
+                toast.success('Car deleted successfully!');
+
+                // ২. তারপর অল-কার পেজে রিডাইরেক্ট করুন
+                router.push('/All-Car');
+                // ৩. ডেটা রিফ্রেশ করার জন্য (অপশনাল কিন্তু কার্যকরী)
+                router.refresh();
+            } else {
+                toast.error('Failed to delete the car.');
             }
-        });
-        const data = await res.json();
-        redirect('/destinations');
-        console.log('Updated Destination:', data);
-        // toast.success('Destination added successfully!');
+
+        } catch (error) {
+            console.error("Delete Error:", error);
+            toast.error('Something went wrong!');
+        }
     }
+
 
     return (
         <AlertDialog>
             <AlertDialog.Trigger className="group flex items-center gap-3 rounded-2xl bg-surface p-4 shadow-xs select-none hover:bg-surface-secondary">
-                <button className="flex items-center gap-1.5 px-4 py-2 border border-red-200 text-red-500 rounded-md hover:bg-red-50 transition">
+                <button className="flex items-center gap-1.5 bg-red-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-red-600 transition-colors shadow-sm cursor-pointer">
                     <LuTrash2 className="text-sm" /> Delete
                 </button>
             </AlertDialog.Trigger>
@@ -39,11 +52,11 @@ export function DeleteCard({ destination }) {
                             <AlertDialog.Icon status="danger">
                                 <TrashBin className="size-5" />
                             </AlertDialog.Icon>
-                            <AlertDialog.Heading>Delete {destination.destinationName} permenantly?</AlertDialog.Heading>
+                            <AlertDialog.Heading>Delete {carData?.carName} permenantly?</AlertDialog.Heading>
                         </AlertDialog.Header>
                         <AlertDialog.Body>
                             <p>
-                                This will delete the destination <strong>{destination.destinationName}</strong> and all of its data permanently. This action cannot be undone. Are you sure you want to proceed?
+                                Warning: You are about to remove <strong> {carData?.carName} </strong>from the DriveFleet database permanently. You will lose all pricing, features, and booking configurations for this car. Proceed anyway?
                             </p>
                         </AlertDialog.Body>
                         <AlertDialog.Footer>

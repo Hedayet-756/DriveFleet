@@ -6,6 +6,7 @@ import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { IoCarSportOutline } from 'react-icons/io5';
 import { Button } from '@heroui/react';
 import { EditModal } from '@/components/EditModal';
+import { DeleteCard } from '@/components/DeleteCard';
 
 const CarDetailsPage = async ({ params }) => {
     const { id } = await params;
@@ -52,9 +53,7 @@ const CarDetailsPage = async ({ params }) => {
 
                 <div className="flex items-center gap-3 text-sm font-semibold">
                     <EditModal carData={carData} />
-                    <Button className="bg-red-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-red-600 transition-colors shadow-sm cursor-pointer">
-                        Delete Car
-                    </Button>
+                    <DeleteCard carData={carData} />
                 </div>
             </div>
 

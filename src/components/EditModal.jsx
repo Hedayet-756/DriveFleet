@@ -1,11 +1,14 @@
 "use client";
 
 import { Button, FieldError, Input, Label, Modal, Surface, TextField, Select, ListBox, TextArea } from "@heroui/react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { BiEdit } from "react-icons/bi";
 
 export function EditModal({ carData }) {
     const [isOpen, setIsOpen] = useState(false);
+    const router = useRouter();
 
     const {
         _id,
@@ -24,25 +27,38 @@ export function EditModal({ carData }) {
         const formData = new FormData(e.currentTarget);
         const Cars = Object.fromEntries(formData.entries());
         console.log('New Car:', Cars);
+        try {
+            const res = await fetch(`http://localhost:5000/addcar/${_id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Cars)
+            });
 
-        const res = await fetch(`http://localhost:5000/addcar/${_id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Cars)
-        });
-        const data = await res.json();
-        console.log('Server Response:', data);
-        redirect('/All-Car');
-        toast.success('Car updated successfully!');
+            if (res.ok) {
+                // ১. প্রথমে টোস্ট মেসেজটি দেখান
+                toast.success('Car Edited successfully!');
+
+                // ২. তারপর অল-কার পেজে রিডাইরেক্ট করুন
+                router.push('/All-Car');
+                // ৩. ডেটা রিফ্রেশ করার জন্য (অপশনাল কিন্তু কার্যকরী)
+                router.refresh();
+            } else {
+                toast.error('Failed to Edit the car.');
+            }
+
+        } catch (error) {
+            console.error("Edit Error:", error);
+            toast.error('Something went wrong!');
+        }
     }
 
     return (
         <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
             <Modal.Trigger>
-                <Button onClick={() => setIsOpen(true)} className="bg-amber-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-amber-600 transition-colors shadow-sm cursor-pointer">
-                    Edit Car
+                <Button onClick={() => setIsOpen(true)} className=" flex items-center gap-1.5 py-2 px-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-amber-600 transition-colors shadow-sm cursor-pointer">
+                    <BiEdit />   Edit Car
                 </Button>
             </Modal.Trigger>
             <Modal.Backdrop>

@@ -9,6 +9,14 @@ const nextConfig = {
         hostname: 'cdn-s3.autocarindia.com',
         port: '',
       },
+      {
+        protocol: 'https',
+        hostname: 'cdn.pixabay.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co',
+      },
     ],
   },
 };
