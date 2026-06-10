@@ -29,22 +29,25 @@ const BookingCard = ({ carData }) => {
             return;
         }
 
+        // ডেট এবং টাইম কম্বাইন করা
         const combinedDateTime = new Date(`${bookingDate} ${bookingHour}`);
+
+        // 🎯 ব্যাকএন্ডের মঙ্গোজ স্কিমার সাথে ম্যাচ করা অবজেক্ট প্রপার্টিজ
         const bookingData = {
             userId: user?.id,
             userName: user?.name,
             userEmail: user?.email,
             userImage: user?.image || "",
-            _id,
+            carId: _id, // মঙ্গোডিবির জন্য carId হিসেবে পাস করা সেফ
             carName,
-            dailyPrice,
+            price: dailyPrice, // বা dailyPrice (ব্যাকএন্ড স্কিমা অনুযায়ী)
             imageUrl,
             pickupLocation,
             departureDateTime: combinedDateTime
         };
-        // console.log(bookingData);
 
         try {
+            // ⚡ আনকমেন্ট এবং ফিক্সড গেটওয়ে রিকোয়েস্ট
             const res = await fetch(`http://localhost:5000/bookings`, {
                 method: 'POST',
                 headers: {
@@ -52,18 +55,28 @@ const BookingCard = ({ carData }) => {
                 },
                 body: JSON.stringify(bookingData)
             });
-            const data = await res.json();
-            console.log(data);
 
-            if (res.ok) {
-                toast.success(`Successfully booked ${carName} for ${bookingHour}!`);
-                router.push('/my-bookings');
-            } else {
-                toast.error('Failed to complete booking. Try again.');
+            // রেসপন্স যদি JSON না হয়, তবে টেক্সট হিসেবে রিড করে এরর থ্রো করবে
+            const contentType = res.headers.get("content-type");
+            if (!res.ok) {
+                if (contentType && contentType.includes("application/json")) {
+                    const errorData = await res.json();
+                    throw new Error(errorData.message || 'Failed to complete booking.');
+                } else {
+                    const errorText = await res.text();
+                    console.error("Server HTML Error Response:", errorText);
+                    throw new Error('Server returned an invalid HTML error response.');
+                }
             }
+
+            // সফল হলে রেসপন্স রিসিভ করবে
+            const data = await res.json();
+            toast.success(`Successfully booked ${carName} for ${bookingHour}!`);
+            router.push('/my-bookings');
+
         } catch (error) {
-            console.error('Booking Error:', error);
-            toast.error('Something went wrong with the fleet gateway!');
+            console.error('Booking Error Details:', error);
+            toast.error(error.message || 'Something went wrong with the fleet gateway!');
         }
     };
 
