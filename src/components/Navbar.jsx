@@ -39,9 +39,6 @@
 
 // export default Navbar;
 
-
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -123,7 +120,7 @@ const NavbarComponent = () => {
                                 {/* Avatar */}
                                 <div className="w-8 h-8 rounded-full bg-cyan-100 border-2 
                                                 border-cyan-400 flex items-center justify-center 
-                                                text-sm font-bold text-cyan-800 flex-shrink-0">
+                                                text-2xl font-extrabold text-cyan-800 flex-shrink-0">
                                     {user?.image
                                         ? <img src={user.image} alt={user.name}
                                             className="w-full h-full rounded-full object-cover" />

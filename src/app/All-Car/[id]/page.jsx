@@ -7,6 +7,7 @@ import { IoCarSportOutline } from 'react-icons/io5';
 import { Button } from '@heroui/react';
 import { EditModal } from '@/components/EditModal';
 import { DeleteCard } from '@/components/DeleteCard';
+import BookingCard from '@/components/BookingCard';
 
 const CarDetailsPage = async ({ params }) => {
     const { id } = await params;
@@ -26,7 +27,6 @@ const CarDetailsPage = async ({ params }) => {
 
     const {
         carName = 'Toyota Camry 2024',
-        dailyPrice = 50,
         carType = 'Sedan',
         imageUrl = 'https://cdn.pixabay.com/photo/2020/03/24/20/53/norway-4965490_1280.jpg',
         seatCapacity = 5,
@@ -128,31 +128,7 @@ const CarDetailsPage = async ({ params }) => {
                     </div>
                 </div>
 
-                <div className="lg:sticky lg:top-6 bg-white border border-cyan-100 rounded-3xl p-6 shadow-xl shadow-cyan-50/50 space-y-6">
-                    <div className="flex items-baseline justify-between border-b border-gray-100 pb-4">
-                        <span className="text-gray-500 font-medium text-sm">Daily Rental Rate</span>
-                        <div className="text-right">
-                            <span className="text-3xl font-extrabold text-cyan-600">${dailyPrice}</span>
-                            <span className="text-xs text-gray-400 font-normal"> / Day</span>
-                        </div>
-                    </div>
-
-
-                    <div className="flex items-start gap-2.5 bg-cyan-50/50 p-3 rounded-xl text-xs text-cyan-900 font-medium leading-relaxed">
-                        <FaRegCalendarAlt className="text-cyan-600 text-sm mt-0.5" />
-                        <span>Pay directly at pickup time or book instantly to secure availability. No hidden charges.</span>
-                    </div>
-
-                    <Button
-                        disabled={availability.toLowerCase() !== 'available'}
-                        className={`w-full font-bold py-4 px-4 rounded-xl shadow-md transition-all text-center text-sm cursor-pointer ${availability.toLowerCase() === 'available'
-                            ? 'bg-cyan-500 text-white hover:bg-cyan-600 shadow-cyan-100'
-                            : 'bg-gray-200 text-gray-400 cursor-not-allowed shadow-none'
-                            }`}
-                    >
-                        {availability.toLowerCase() === 'available' ? 'Confirm Booking' : 'Currently Booked'}
-                    </Button>
-                </div>
+                <BookingCard carData={carData} />
 
             </div>
         </div>

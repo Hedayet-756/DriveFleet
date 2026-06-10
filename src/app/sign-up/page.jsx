@@ -23,15 +23,14 @@ const SignUpPage = () => {
         const { data, error } = await authClient.signUp.email({
             email: user.email,
             password: user.password,
-            name: user.name,          // এখন এটি সঠিকভাবে ভ্যালু পাবে
-            image: user.image || ""   // ইমেজ না থাকলে খালি স্ট্রিং পাস হবে
+            name: user.name,
+            image: user.image || ""
         });
         console.log('SignUp:', data, error);
         if (data) {
             toast.success('Account created successfully!');
-            // 🎯 ৩. redirect('/') এর বদলে router.push('/') ব্যবহার করুন
             router.push('/');
-            router.refresh(); // স্টেট আপডেট করার জন্য পেজটি রিফ্রেশ হবে
+            router.refresh();
         }
         if (error) {
             toast.error(error.message);
@@ -51,7 +50,6 @@ const SignUpPage = () => {
             </div>
             <Card>
                 <Form onSubmit={onSubmit} className="flex w-96 flex-col gap-4">
-                    {/* 🎯 Name Field (name প্রোপার্টি Input-এ নেওয়া হয়েছে) */}
                     <TextField isRequired>
                         <Label className="text-slate-700 font-semibold text-sm">Full Name</Label>
                         <Input name="name" placeholder="John Doe" className="rounded-xl" />
@@ -66,7 +64,6 @@ const SignUpPage = () => {
                         <FieldError />
                     </TextField>
 
-                    {/* 🎯 Email Field (name প্রোপার্টি Input-এ নেওয়া হয়েছে) */}
                     <TextField isRequired>
                         <Label className="text-slate-700 font-semibold text-sm">Email Address</Label>
                         <Input name="email" type="email" placeholder="your.email@example.com" className="rounded-xl" />
@@ -119,7 +116,6 @@ const SignUpPage = () => {
                         Sign Up With Google
                     </Button>
 
-                    {/* Redirect link */}
                     <div className="text-center text-sm text-slate-500 mt-2">
                         Already have an account?{' '}
                         <a href="/login" className="text-cyan-500 hover:underline font-semibold">
