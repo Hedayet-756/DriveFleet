@@ -10,7 +10,7 @@ export const auth = betterAuth({
         // Optional: if you don't provide a client, database transactions won't be enabled.
         client
     }),
-    emailAndPasswor: {
-        enabled: true,
+    emailAndPassword: {
+        enabled: true,  // ← এই line টা যোগ করুন
     },
 });

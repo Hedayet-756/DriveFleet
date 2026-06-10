@@ -1,155 +1,274 @@
-import { Avatar, Button } from '@heroui/react';
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-
-const Navbar = () => {
-    return (
-        <div className="w-full bg-white text-cyan-600 shadow-md py-4 mb-6">
-            <nav className="flex items-center justify-between w-10/12 mx-auto">
-                <ul className='flex gap-3'>
-                    <li><Link href="/">Home</Link></li>
-                    <li><Link href="/All-Car">All Car</Link></li>
-                    <li><Link href="/my-bookings">My Bookings</Link></li>
-                    <li><Link href="/Add-Car">Add Car</Link></li>
-                </ul>
-                <div>
-                    <Image src="/assets/DriveFleet.png" alt="Logo" width={120} height={80} />
-                </div>
-                <ul className='flex gap-3 items-center'>
-                    <li><Link href="/profile">Profile</Link></li>
-                    {/* {user ? <>
-                        <Avatar>
-                            <Avatar.Image referrerPolicy="no-referrer" alt={user?.name} src={user?.image} />
-                            <Avatar.Fallback className='sm:text-2xl text-5xl font-extrabold text-pink-950 mt-1'>{user?.name.charAt(0)}</Avatar.Fallback>
-                        </Avatar>
-                        <li><Button onClick={handleLogout} size='sm' variant='danger' className={'rounded-md'}>Logout</Button></li>
-                    </> :
-                        <>
-                            <li><Link href="/login">Login</Link></li>
-                            <li><Link href="/SignUp">Sign up</Link></li>
-                        </>
-                    } */}
-                </ul>
-            </nav>
-        </div>
-    );
-};
-
-export default Navbar;
-
-
-
-// import React, { useState } from 'react';
-// import {
-//   Navbar as HeroNavbar,
-//   NavbarBrand,
-//   NavbarContent,
-//   NavbarItem,
-//   NavbarMenuToggle,
-//   NavbarMenu,
-//   NavbarMenuItem,
-//   Button,
-//   Avatar
-// } from '@heroui/react';
+'use client';
+// import { Avatar, Button } from '@heroui/react';
 // import Image from 'next/image';
 // import Link from 'next/link';
+// import React from 'react';
 
 // const Navbar = () => {
-//   // মোবাইল মেনু ওপেন/ক্লোজ স্টেট
-//   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-//   // আপনার ইউজার স্টেট (টেস্টিং বা ফিউচার ইউজের জন্য কমেন্ট আউট করে রাখা হলো)
-//   // const user = null;
-
-//   const menuItems = [
-//     { name: "Home", path: "/" },
-//     { name: "Destinations", path: "/destinations" },
-//     { name: "My Bookings", path: "/my-bookings" },
-//     { name: "Add Destination", path: "/add-destination" },
-//     { name: "Profile", path: "/profile" },
-//   ];
-
-//   return (
-//     <HeroNavbar
-//       isMenuOpen={isMenuOpen}
-//       onMenuOpenChange={setIsMenuOpen}
-//       className="w-full bg-white text-cyan-600 shadow-md py-2 mb-6"
-//       maxWidth="xl"
-//     >
-//       {/* ১. মোবাইল ভিউ এর জন্য মেনু টগল বাটন (ডেস্কটপে অটোমেটিক হিডেন থাকবে) */}
-//       <NavbarContent className="sm:hidden" justify="start">
-//         <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"} />
-//       </NavbarContent>
-
-//       {/* ২. লোগো এরিয়া (মোবাইলে লোগোতে ক্লিক করলে মেনু টগল হবে) */}
-//       <NavbarContent justify="center" className="sm:justify-start">
-//         <NavbarBrand>
-//           <div
-//             onClick={() => setIsMenuOpen(!isMenuOpen)}
-//             className="cursor-pointer active:scale-95 transition-transform sm:pointer-events-none"
-//             title="Click to toggle menu on mobile"
-//           >
-//             <Image src="/assets/DriveFleet.png" alt="Logo" width={120} height={80} priority />
-//           </div>
-//         </NavbarBrand>
-//       </NavbarContent>
-
-//       {/* ৩. ডেস্কটপ ভিউ এর জন্য বামপাশের লিংকগুলো (মোবাইলে হিডেন থাকবে) */}
-//       <NavbarContent className="hidden sm:flex gap-6" justify="start">
-//         {menuItems.slice(0, 4).map((item, index) => (
-//           <NavbarItem key={index}>
-//             <Link href={item.path} className="hover:text-cyan-500 font-medium transition-colors">
-//               {item.name}
-//             </Link>
-//           </NavbarItem>
-//         ))}
-//       </NavbarContent>
-
-//       {/* ৪. ডানপাশের প্রোফাইল / লগইন এরিয়া (ডেস্কটপ ভিউ) */}
-//       <NavbarContent justify="end" className="hidden sm:flex gap-4">
-//         <NavbarItem>
-//           <Link href="/profile" className="hover:text-cyan-500 font-medium transition-colors">
-//             Profile
-//           </Link>
-//         </NavbarItem>
-
-//         {/* ফিউচার লগইন কোড লজিক এখানে রাখতে পারেন: */}
-//         {/* {user ? (
-//           <>
-//             <Avatar src={user?.image} name={user?.name?.charAt(0)} size="sm" />
-//             <Button size="sm" color="danger" variant="flat">Logout</Button>
-//           </>
-//         ) : (
-//           <>
-//             <NavbarItem><Link href="/login" className="hover:text-cyan-500">Login</Link></NavbarItem>
-//             <NavbarItem><Button as={Link} href="/SignUp" size="sm" color="primary">Sign up</Button></NavbarItem>
-//           </>
-//         )} */}
-//       </NavbarContent>
-
-//       {/* ৫. 📱 মোবাইল ড্রয়ার মেনু (লোগো বা হ্যামবার্গারে ক্লিক করলে বামপাশ/উপর থেকে স্লাইড হয়ে আসবে) */}
-//       <NavbarMenu className="bg-white/95 backdrop-blur-md pt-6 pl-8">
-//         {menuItems.map((item, index) => (
-//           <NavbarMenuItem key={index}>
-//             <Link
-//               href={item.path}
-//               className="w-full text-cyan-600 block py-2 text-lg font-medium hover:text-cyan-400 active:text-cyan-700"
-//               onClick={() => setIsMenuOpen(false)} // লিংকে ক্লিক করলে মেনু অটোমেটিক বন্ধ হয়ে যাবে
-//             >
-//               {item.name}
-//             </Link>
-//           </NavbarMenuItem>
-//         ))}
-
-//         {/* মোবাইলের জন্য লগইন/সাইনআপ অপশন (কমেন্ট করা লজিক) */}
-//         {/* <div className="flex flex-col gap-3 mt-4 border-t border-gray-100 pt-4">
-//           <Link href="/login" className="text-lg py-2" onClick={() => setIsMenuOpen(false)}>Login</Link>
-//           <Button as={Link} href="/SignUp" color="primary" className="w-full mt-2" onClick={() => setIsMenuOpen(false)}>Sign Up</Button>
-//         </div> */}
-//       </NavbarMenu>
-//     </HeroNavbar>
-//   );
+//     return (
+//         <div className="w-full bg-white text-cyan-600 shadow-md py-4 mb-6">
+//             <nav className="flex items-center justify-between w-10/12 mx-auto">
+//                 <ul className='flex gap-3'>
+//                     <li><Link href="/">Home</Link></li>
+//                     <li><Link href="/All-Car">All Car</Link></li>
+//                     <li><Link href="/my-bookings">My Bookings</Link></li>
+//                     <li><Link href="/Add-Car">Add Car</Link></li>
+//                 </ul>
+//                 <div>
+//                     <Image src="/assets/DriveFleet.png" alt="Logo" width={120} height={80} />
+//                 </div>
+//                 <ul className='flex gap-3 items-center'>
+//                     <li><Link href="/profile">Profile</Link></li>
+//                     { {user ? <>
+//                         <Avatar>
+//                             <Avatar.Image referrerPolicy="no-referrer" alt={user?.name} src={user?.image} />
+//                             <Avatar.Fallback className='sm:text-2xl text-5xl font-extrabold text-pink-950 mt-1'>{user?.name.charAt(0)}</Avatar.Fallback>
+//                         </Avatar>
+//                         <li><Button onClick={handleLogout} size='sm' variant='danger' className={'rounded-md'}>Logout</Button></li>
+//                     </> :
+//                         <>
+//                             <li><Link href="/login">Login</Link></li>
+//                             <li><Link href="/SignUp">Sign up</Link></li>
+//                         </>
+//                     }
+//                 </ul>
+//             </nav>
+//         </div>
+//     );
 // };
 
 // export default Navbar;
+
+
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { authClient } from '@/lib/auth-client';
+import toast from 'react-hot-toast';
+
+const NavbarComponent = () => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const dropdownRef = useRef(null);
+    const router = useRouter();
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+
+    const menuItems = [
+        { name: 'Home', path: '/' },
+        { name: 'All Car', path: '/All-Car' },
+        { name: 'My Bookings', path: '/my-bookings' },
+        { name: 'Add Car', path: '/Add-Car' },
+    ];
+
+    // dropdown এর বাইরে click করলে বন্ধ হবে
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    const handleLogout = async () => {
+        await authClient.signOut();
+        toast.success('Logged out successfully');
+        router.push('/login');
+        router.refresh();
+    };
+
+    return (
+        <nav className="w-full bg-white shadow-sm border-b border-gray-100 mb-6">
+            <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+
+                {/* Logo */}
+                <Link href="/">
+                    <Image
+                        src="/assets/DriveFleet.png"
+                        alt="DriveFleet Logo"
+                        width={130} height={50}
+                        className="object-contain"
+                    />
+                </Link>
+
+                {/* Desktop nav links */}
+                <ul className="hidden sm:flex gap-6">
+                    {menuItems.map((item, i) => (
+                        <li key={i}>
+                            <Link href={item.path}
+                                className="text-gray-600 font-medium hover:text-cyan-500 
+                                           transition-colors text-sm">
+                                {item.name}
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
+
+                {/* Right side */}
+                <div className="flex items-center gap-3">
+                    {user ? (
+                        /* Profile dropdown */
+                        <div className="relative" ref={dropdownRef}>
+                            <button
+                                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                className="flex items-center gap-2 px-2 py-1.5 rounded-lg
+                                           hover:bg-gray-100 transition-colors"
+                            >
+                                {/* Avatar */}
+                                <div className="w-8 h-8 rounded-full bg-cyan-100 border-2 
+                                                border-cyan-400 flex items-center justify-center 
+                                                text-sm font-bold text-cyan-800 flex-shrink-0">
+                                    {user?.image
+                                        ? <img src={user.image} alt={user.name}
+                                            className="w-full h-full rounded-full object-cover" />
+                                        : user?.name?.charAt(0).toUpperCase()
+                                    }
+                                </div>
+                                <span className="hidden md:inline text-sm font-medium text-gray-700">
+                                    {user?.name?.split(' ')[0]}
+                                </span>
+                                {/* Chevron */}
+                                <svg className={`w-4 h-4 text-gray-400 transition-transform duration-200
+                                                 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                                    fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                        strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </button>
+
+                            {/* Dropdown */}
+                            {isDropdownOpen && (
+                                <div className="absolute right-0 top-[calc(100%+8px)] w-56 bg-white 
+                                                rounded-xl border border-gray-200 shadow-lg 
+                                                overflow-hidden z-50">
+
+                                    {/* User info header */}
+                                    <div className="px-4 py-3 border-b border-gray-100">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-9 h-9 rounded-full bg-cyan-100 border-2 
+                                                            border-cyan-400 flex items-center justify-center 
+                                                            text-sm font-bold text-cyan-800 flex-shrink-0">
+                                                {user?.image
+                                                    ? <img src={user.image} alt={user.name}
+                                                        className="w-full h-full rounded-full object-cover" />
+                                                    : user?.name?.charAt(0).toUpperCase()
+                                                }
+                                            </div>
+                                            <div className="overflow-hidden">
+                                                <p className="text-sm font-medium text-gray-800 truncate">
+                                                    {user?.name}
+                                                </p>
+                                                <p className="text-xs text-gray-500 truncate">
+                                                    {user?.email}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Edit profile */}
+                                    <Link
+                                        href="/profile"
+                                        onClick={() => setIsDropdownOpen(false)}
+                                        className="flex items-center gap-3 px-4 py-2.5 text-sm 
+                                                   text-gray-700 hover:bg-gray-50 transition-colors"
+                                    >
+                                        <svg className="w-4 h-4 text-gray-400" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 
+                                                14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                        Edit profile
+                                    </Link>
+
+                                    <div className="border-t border-gray-100" />
+
+                                    {/* Logout */}
+                                    <button
+                                        onClick={handleLogout}
+                                        className="flex items-center gap-3 w-full px-4 py-2.5 text-sm 
+                                                   text-red-600 hover:bg-red-50 transition-colors"
+                                    >
+                                        <svg className="w-4 h-4" fill="none"
+                                            stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 
+                                                4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 
+                                                3 0 013 3v1" />
+                                        </svg>
+                                        Logout
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        /* Not logged in */
+                        <>
+                            <Link href="/login"
+                                className="text-gray-600 font-medium hover:text-cyan-500 text-sm">
+                                Login
+                            </Link>
+                            <Link href="/sign-up"
+                                className="bg-cyan-500 text-white text-sm font-semibold 
+                                           px-4 py-1.5 rounded-xl hover:bg-cyan-600 shadow-sm">
+                                Sign up
+                            </Link>
+                        </>
+                    )}
+
+                    {/* Hamburger */}
+                    <button className="sm:hidden text-gray-600"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            {isMenuOpen
+                                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M6 18L18 6M6 6l12 12" />
+                                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h16" />
+                            }
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile menu */}
+            {isMenuOpen && (
+                <div className="sm:hidden bg-white border-t border-gray-100 px-6 pt-4 pb-6">
+                    <ul className="flex flex-col gap-3">
+                        {menuItems.map((item, i) => (
+                            <li key={i}>
+                                <Link href={item.path}
+                                    className="text-cyan-600 text-lg font-medium 
+                                               hover:text-cyan-400 block py-1"
+                                    onClick={() => setIsMenuOpen(false)}>
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                    {user && (
+                        <div className="mt-4 pt-4 border-t border-gray-100 flex flex-col gap-3">
+                            <Link href="/profile"
+                                className="text-gray-700 text-base py-1"
+                                onClick={() => setIsMenuOpen(false)}>
+                                Edit profile
+                            </Link>
+                            <button onClick={handleLogout}
+                                className="text-red-600 text-base py-1 text-left">
+                                Logout
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
+        </nav>
+    );
+};
+
+export default NavbarComponent;
