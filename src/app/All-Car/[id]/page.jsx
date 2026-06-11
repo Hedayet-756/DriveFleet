@@ -13,6 +13,10 @@ const CarDetailsPage = async ({ params }) => {
     const { id } = await params;
 
     const res = await fetch(`http://localhost:5000/addcar/${id}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: "logged in"
+        }
     });
 
     if (!res.ok) {
