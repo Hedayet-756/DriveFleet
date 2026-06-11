@@ -29,18 +29,16 @@ const BookingCard = ({ carData }) => {
             return;
         }
 
-        // ডেট এবং টাইম কম্বাইন করা
         const combinedDateTime = new Date(`${bookingDate} ${bookingHour}`);
 
-        // 🎯 ব্যাকএন্ডের মঙ্গোজ স্কিমার সাথে ম্যাচ করা অবজেক্ট প্রপার্টিজ
         const bookingData = {
             userId: user?.id,
             userName: user?.name,
             userEmail: user?.email,
             userImage: user?.image || "",
-            carId: _id, // মঙ্গোডিবির জন্য carId হিসেবে পাস করা সেফ
+            carId: _id,
             carName,
-            price: dailyPrice, // বা dailyPrice (ব্যাকএন্ড স্কিমা অনুযায়ী)
+            price: dailyPrice,
             imageUrl,
             pickupLocation,
             departureDateTime: combinedDateTime
@@ -59,7 +57,6 @@ const BookingCard = ({ carData }) => {
                 body: JSON.stringify(bookingData)
             });
 
-            // রেসপন্স যদি JSON না হয়, তবে টেক্সট হিসেবে রিড করে এরর থ্রো করবে
             const contentType = res.headers.get("content-type");
             if (!res.ok) {
                 if (contentType && contentType.includes("application/json")) {
@@ -72,7 +69,6 @@ const BookingCard = ({ carData }) => {
                 }
             }
 
-            // সফল হলে রেসপন্স রিসিভ করবে
             const data = await res.json();
             toast.success(`Successfully booked ${carName} for ${bookingHour}!`);
             router.push('/my-bookings');

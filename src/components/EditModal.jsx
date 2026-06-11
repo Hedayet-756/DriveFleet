@@ -41,12 +41,8 @@ export function EditModal({ carData }) {
             });
 
             if (res.ok) {
-                // ১. প্রথমে টোস্ট মেসেজটি দেখান
                 toast.success('Car Edited successfully!');
-
-                // ২. তারপর অল-কার পেজে রিডাইরেক্ট করুন
                 router.push('/All-Car');
-                // ৩. ডেটা রিফ্রেশ করার জন্য (অপশনাল কিন্তু কার্যকরী)
                 router.refresh();
             } else {
                 toast.error('Failed to Edit the car.');

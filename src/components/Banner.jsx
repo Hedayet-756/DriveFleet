@@ -62,10 +62,8 @@ const Banner = () => {
                 />
             ))}
 
-            {/* কন্টেন্টের পেছনে কালো ডার্ক ওভারলে (যেন টেক্সট ফুটে ওঠে) */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none z-10" />
 
-            {/* ব্যানারের ভেতরের কন্টেন্ট (লেখা ও বাটন) */}
             <motion.div
                 className="p-10 text-center flex justify-center flex-col items-center gap-3.5 flex-1 mt-24 z-20"
                 variants={containerVariants}
@@ -95,8 +93,6 @@ const Banner = () => {
                     </motion.div>
                 </motion.div>
             </motion.div>
-
-            {/* নিচের সার্চ বার */}
             <div className="bg-white/10 backdrop-blur-md flex justify-between gap-5 w-full items-center z-20 border-t border-white/10">
                 <div className="px-3 py-2">
                     <h3 className="text-sm font-medium">Location</h3>
