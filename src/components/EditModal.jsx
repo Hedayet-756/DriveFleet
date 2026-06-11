@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import { Button, FieldError, Input, Label, Modal, Surface, TextField, Select, ListBox, TextArea } from "@heroui/react";
 import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -28,10 +29,13 @@ export function EditModal({ carData }) {
         const Cars = Object.fromEntries(formData.entries());
         console.log('New Car:', Cars);
         try {
-            const res = await fetch(`http://localhost:5000/addcar/${_id}`, {
+
+            const { data: tokenData } = await authClient.token()
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/addcar/${_id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData.token}`
                 },
                 body: JSON.stringify(Cars)
             });

@@ -8,14 +8,12 @@ import Link from 'next/link';
 
 const MyBookingsPage = async () => {
 
-    // 🔒 সার্ভার সাইড সেশন সিকিউরিটি চেক
     const session = await auth.api.getSession({
         headers: await headers()
     });
 
     const user = session?.user;
 
-    // ইউজার লগইন না থাকলে সার্ভার প্রোটেকশন গেটওয়ে
     if (!user) {
         return (
             <div className="min-h-[70vh] flex flex-col items-center justify-center gap-4 px-4 text-center">
@@ -33,11 +31,17 @@ const MyBookingsPage = async () => {
         );
     }
 
-    // ⚡ সার্ভার সাইড ডিরেক্ট ফেচিং 
     let bookings = [];
     try {
-        const res = await fetch(`http://localhost:5000/bookings/${user?.id}`, {
-            cache: 'no-store'
+        const { token } = await auth.api.getToken({
+            headers: await headers()
+        });
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user?.id}`, {
+            cache: 'no-store',
+            headers: {
+                authorization: `Bearer ${token}`
+            }
         });
         if (res.ok) {
             bookings = await res.json();
@@ -50,13 +54,11 @@ const MyBookingsPage = async () => {
         <div className="min-h-screen bg-slate-50/50 py-10">
             <div className="w-11/12 max-w-4xl mx-auto">
 
-                {/* 📋 হেডার সেকশন (ফিগমা ম্যাচড) */}
                 <div className="mb-8 relative border-b border-slate-100 pb-5">
                     <h1 className="text-3xl font-bold font-serif text-slate-900 mb-1">My Bookings</h1>
                     <p className="text-sm text-slate-500">Manage and view your upcoming travel plans</p>
                 </div>
 
-                {/* বুকিংস ডাটা কন্ডিশনাল রেন্ডারিং */}
                 {!Array.isArray(bookings) || bookings.length === 0 ? (
                     <div className="text-center py-16 px-4 border border-dashed border-slate-200 rounded-2xl bg-white shadow-xs max-w-xl mx-auto flex flex-col items-center justify-center gap-3">
                         <div className="text-slate-300 bg-slate-50 p-4 rounded-full">
@@ -71,12 +73,10 @@ const MyBookingsPage = async () => {
                         </Link>
                     </div>
                 ) : (
-                    /* 🎯 ফিগমা রিয়েল লিস্ট লেআউট কন্টেইনার */
                     <div className="flex flex-col gap-5">
                         {bookings.map((booking) => {
                             const isPending = booking.status?.toLowerCase() === 'pending';
 
-                            // ডেট এবং আওয়ার কাস্টম লোকাল ফরম্যাটিং (ফিগমা স্টাইল)
                             const departureDateTimeStr = booking.departureDateTime
                                 ? new Date(booking.departureDateTime).toLocaleString('en-US', {
                                     month: 'long',
@@ -85,7 +85,7 @@ const MyBookingsPage = async () => {
                                     hour: '2-digit',
                                     minute: '2-digit',
                                     hour12: true
-                                }).replace(',', ' at') // কমা সরিয়ে 'at' বসানোর জন্য
+                                }).replace(',', ' at')
                                 : 'Not Scheduled';
 
                             return (
@@ -93,7 +93,7 @@ const MyBookingsPage = async () => {
                                     key={booking._id}
                                     className="flex flex-col md:flex-row gap-6 p-5 bg-white border border-slate-100 rounded-xl shadow-xs hover:shadow-md transition-all duration-200"
                                 >
-                                    {/* 🖼️ বামপাশে ইমেজ */}
+
                                     <div className="relative w-full md:w-64 h-40 flex-shrink-0 overflow-hidden rounded-lg bg-slate-900">
                                         <img
                                             src={booking.imageUrl || "https://images.unsplash.com/photo-1503376780353-7e6692767b70"}
@@ -102,11 +102,9 @@ const MyBookingsPage = async () => {
                                         />
                                     </div>
 
-                                    {/* 📝 ডানপাশে কন্টেন্ট ও ডিটেইলস */}
                                     <div className="flex flex-col flex-grow justify-between py-0.5">
                                         <div className="space-y-2.5">
 
-                                            {/* 🏷️ স্ট্যাটাস ব্যাজ (ফিগমা ম্যাচড কালার) */}
                                             <div>
                                                 <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold border ${isPending
                                                     ? 'bg-amber-50 text-amber-600 border-amber-200'
@@ -117,12 +115,9 @@ const MyBookingsPage = async () => {
                                                 </span>
                                             </div>
 
-                                            {/* 🏎️ টাইটেল বা গাড়ির নাম */}
                                             <h3 className="text-xl font-bold text-slate-800 tracking-tight">
                                                 {booking.carName || 'DriveFleet Supercar'}
                                             </h3>
-
-                                            {/* 📍 মেটা ইনফো লিস্ট */}
                                             <div className="space-y-1 text-xs text-slate-500 font-medium">
                                                 <div className="flex items-center gap-2">
                                                     <LuCalendarDays className="text-slate-400 text-sm" />
@@ -139,13 +134,11 @@ const MyBookingsPage = async () => {
                                             </div>
                                         </div>
 
-                                        {/* 💰 প্রাইস এবং অ্যাকশন বাটন রো */}
                                         <div className="flex items-end justify-between mt-4 md:mt-0 pt-4 border-t border-slate-50 md:border-t-0">
                                             <div className="text-2xl font-bold text-[#1ca0bc]">
                                                 ${booking.price || booking.dailyPrice}
                                             </div>
 
-                                            {/* অ্যাকশন বাটন গ্রূপ */}
                                             <div className="flex items-center gap-2.5">
                                                 <BookingCancelAlert bookingId={booking._id} />
 

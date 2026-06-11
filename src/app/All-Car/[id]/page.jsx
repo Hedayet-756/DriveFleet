@@ -1,21 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { LuMapPin, LuChevronLeft, LuCheck, LuInfo } from 'react-icons/lu';
-import { FaRegCalendarAlt } from 'react-icons/fa';
 import { MdOutlineAirlineSeatReclineExtra } from 'react-icons/md';
 import { IoCarSportOutline } from 'react-icons/io5';
-import { Button } from '@heroui/react';
 import { EditModal } from '@/components/EditModal';
 import { DeleteCard } from '@/components/DeleteCard';
 import BookingCard from '@/components/BookingCard';
+import { auth } from '@/lib/auth';
+import { headers } from 'next/headers';
 
 const CarDetailsPage = async ({ params }) => {
     const { id } = await params;
+    const { token } = await auth.api.getToken({
+        headers: await headers()
+    });
+    // console.log(token);
 
-    const res = await fetch(`http://localhost:5000/addcar/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/addcar/${id}`, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: "logged in"
+            Authorization: `Bearer ${token}`
         }
     });
 

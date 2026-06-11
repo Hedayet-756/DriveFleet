@@ -3,23 +3,27 @@
 import { authClient } from "@/lib/auth-client";
 import { TrashBin } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@heroui/react";
+import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
 import toast from "react-hot-toast";
 
 export function BookingCancelAlert({ bookingId }) {
     const handleCancelBooking = async () => {
 
-        const res = await fetch(`http://localhost:5000/bookings/${bookingId}`, {
+        const { data: tokenData } = await authClient.token()
+
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${bookingId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                authorization: `Bearer ${tokenData.token}`
             }
         });
         const data = await res.json();
         console.log(data);
         if (res.ok) {
-            redirect('/my-bookings');
             toast.success('Booking cancelled successfully!');
+            redirect('/my-bookings');
             // Optionally, you can trigger a refresh or update the UI to reflect the cancellation
         } else {
             toast.error(`Failed to cancel booking: ${data.message}`);

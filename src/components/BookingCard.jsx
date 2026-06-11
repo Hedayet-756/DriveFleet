@@ -47,11 +47,14 @@ const BookingCard = ({ carData }) => {
         };
 
         try {
-            // ⚡ আনকমেন্ট এবং ফিক্সড গেটওয়ে রিকোয়েস্ট
-            const res = await fetch(`http://localhost:5000/bookings`, {
+            const { data: tokenData } = await authClient.token()
+            console.log(tokenData)
+
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData?.token}`
                 },
                 body: JSON.stringify(bookingData)
             });

@@ -1,4 +1,5 @@
 'use client';
+import { authClient } from '@/lib/auth-client';
 import { Button, FieldError, Input, Label, TextArea, TextField, Select, ListBox } from '@heroui/react';
 import { redirect, useRouter } from 'next/navigation';
 import React from 'react';
@@ -14,21 +15,21 @@ const AddCarPage = () => {
         console.log('New Car:', Cars);
 
         try {
-            const res = await fetch(`http://localhost:5000/addcar`, {
+
+            const { data: tokenData } = await authClient.token()
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/addcar`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData.token}`
                 },
                 body: JSON.stringify(Cars)
             });
 
             if (res.ok) {
-                // ১. প্রথমে টোস্ট মেসেজটি দেখান
                 toast.success('Car Added successfully!');
 
-                // ২. তারপর অল-কার পেজে রিডাইরেক্ট করুন
                 router.push('/All-Car');
-                // ৩. ডেটা রিফ্রেশ করার জন্য (অপশনাল কিন্তু কার্যকরী)
                 router.refresh();
             } else {
                 toast.error('Failed to Add the car.');
@@ -50,7 +51,6 @@ const AddCarPage = () => {
                 <form className="p-10 space-y-6" onSubmit={onsubmit}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-                        {/* Car Name */}
                         <div className="md:col-span-2">
                             <TextField name="carName" isRequired>
                                 <Label className="text-gray-700 font-semibold">Car Name</Label>
@@ -59,7 +59,6 @@ const AddCarPage = () => {
                             </TextField>
                         </div>
 
-                        {/* Daily Rent Price */}
                         <TextField name="dailyPrice" type="number" isRequired>
                             <Label className="text-gray-700 font-semibold">Daily Rent Price (USD)</Label>
                             <Input
@@ -70,7 +69,6 @@ const AddCarPage = () => {
                             <FieldError />
                         </TextField>
 
-                        {/* Car Type (Select) */}
                         <div>
                             <Select
                                 name="carType"
@@ -95,14 +93,12 @@ const AddCarPage = () => {
                             </Select>
                         </div>
 
-                        {/* Seat Capacity */}
                         <TextField name="seatCapacity" type="number" isRequired>
                             <Label className="text-gray-700 font-semibold">Seat Capacity</Label>
                             <Input type="number" placeholder="4 or 7" className="rounded-xl" />
                             <FieldError />
                         </TextField>
 
-                        {/* Availability Status (Select) */}
                         <div>
                             <Select
                                 name="availability"
@@ -126,7 +122,6 @@ const AddCarPage = () => {
                             </Select>
                         </div>
 
-                        {/* Pickup Location */}
                         <div className="md:col-span-2">
                             <TextField name="pickupLocation" isRequired>
                                 <Label className="text-gray-700 font-semibold">Pickup Location</Label>
@@ -135,7 +130,6 @@ const AddCarPage = () => {
                             </TextField>
                         </div>
 
-                        {/* Image URL */}
                         <div className="md:col-span-2">
                             <TextField name="imageUrl" isRequired>
                                 <Label className="text-gray-700 font-semibold">Image URL (imgbb/postimage)</Label>
@@ -148,7 +142,6 @@ const AddCarPage = () => {
                             </TextField>
                         </div>
 
-                        {/* Description */}
                         <div className="md:col-span-2">
                             <TextField name="description" isRequired>
                                 <Label className="text-gray-700 font-semibold">Description</Label>
@@ -161,7 +154,6 @@ const AddCarPage = () => {
                         </div>
                     </div>
 
-                    {/* Submit Button */}
                     <div className="pt-4">
                         <Button
 
