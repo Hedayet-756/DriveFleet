@@ -79,18 +79,13 @@ const Banner = () => {
                     unforgettable memories with our premium fleet.
                 </motion.p>
 
-                <motion.div className="flex gap-5" variants={itemVariants}>
+                <motion.div href="/All-Car" className="flex gap-5" variants={itemVariants}>
                     <motion.div variants={buttonHover} whileHover="hover">
                         <Button size="lg" className="bg-cyan-500 text-white font-semibold rounded-none cursor-pointer px-6 py-3">
                             Explore Now
                         </Button>
                     </motion.div>
 
-                    <motion.div variants={buttonHover} whileHover="hover">
-                        <Button size="lg" className="bg-white/50 text-white font-semibold rounded-none cursor-pointer px-6 py-3">
-                            View Destination
-                        </Button>
-                    </motion.div>
                 </motion.div>
             </motion.div>
             <div className="bg-white/10 backdrop-blur-md flex justify-between gap-5 w-full items-center z-20 border-t border-white/10">
@@ -106,7 +101,7 @@ const Banner = () => {
                 <Separator variant="tertiary" orientation="vertical" />
                 <div className="py-2">
                     <h3 className="text-sm font-medium">Budget</h3>
-                    <p className="text-xs text-gray-200">$100-$3000</p>
+                    <p className="text-xs text-gray-200">$50-$500</p>
                 </div>
                 <Separator variant="tertiary" orientation="vertical" />
                 <div className="py-2">

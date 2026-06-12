@@ -7,9 +7,7 @@ const Featured = async () => {
 
     let cars = [];
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`, {
-            cache: 'no-store'
-        });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`);
         if (res.ok) {
             cars = await res.json();
         }
