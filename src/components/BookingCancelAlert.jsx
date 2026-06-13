@@ -3,32 +3,43 @@
 import { authClient } from "@/lib/auth-client";
 import { TrashBin } from "@gravity-ui/icons";
 import { AlertDialog, Button } from "@heroui/react";
-import { refresh } from "next/cache";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
 export function BookingCancelAlert({ bookingId }) {
+    const router = useRouter();
+
     const handleCancelBooking = async () => {
+        try {
+            const { data: tokenData } = await authClient.token();
 
-        const { data: tokenData } = await authClient.token()
+            const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${bookingId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${tokenData?.token}`
+                }
+            });
 
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${bookingId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${tokenData.token}`
+            if (!res.ok) {
+                const errorData = await res.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Failed to cancel booking');
             }
-        });
-        const data = await res.json();
-        console.log(data);
-        if (res.ok) {
+
+            const data = await res.json();
+            console.log("Delete Response:", data);
+
             toast.success('Booking cancelled successfully!');
-            redirect('/my-bookings');
-            // Optionally, you can trigger a refresh or update the UI to reflect the cancellation
-        } else {
-            toast.error(`Failed to cancel booking: ${data.message}`);
+
+            router.push('/my-bookings');
+            router.refresh();
+
+        } catch (error) {
+            console.error("Cancel Booking Error:", error);
+            toast.error(error.message || 'Something went wrong while cancelling!');
         }
     }
+
     return (
         <AlertDialog>
             <Button

@@ -38,7 +38,6 @@ const MyBookingsPage = async () => {
         });
 
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${user?.id}`, {
-            cache: 'no-store',
             headers: {
                 authorization: `Bearer ${token}`
             }
@@ -147,7 +146,7 @@ const MyBookingsPage = async () => {
                                             </div>
 
                                             <div className="flex items-center gap-2.5">
-                                                <BookingCancelAlert bookingId={booking._id} />
+                                                <BookingCancelAlert bookingId={booking._id || booking.id} />
 
                                                 <Link href={`All-Car/${booking.carId || booking._id}`}>
                                                     <Button size="sm" className="bg-[#1ca0bc] hover:bg-[#188fa8] text-white font-semibold rounded-md shadow-sm transition h-9 px-4 flex items-center gap-1 text-xs cursor-pointer">
