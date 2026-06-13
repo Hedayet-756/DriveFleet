@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🏎️ DriveFleet - Premium Car Rental Platform
 
-## Getting Started
+**DriveFleet** is a modern, luxury-driven web application designed to make premium car rentals seamless, fast, and secure. Built with cutting-edge technologies, it provides users with an elite browsing and booking experience, ensuring their journey starts with the perfect ride.
 
-First, run the development server:
+🔗 **Live Site URL:** [https://drivefleet-chi.vercel.app](https://drivefleet-chi.vercel.app)
+⚙️ **Backend Server URL:** [https://drivefleet-server-sigma.vercel.app](https://drivefleet-server-sigma.vercel.app)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Key Features & Functionalities
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+Here are the core features that define the elite user experience of **DriveFleet**:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+* **Dynamic Live Search & Category Filtering:** Renter-friendly interface equipped with a client-side real-time search bar and categorized filters (Sedan, SUV, Hatchback, Luxury, Hybrid/EV). It auto-calculates available cars instantly as you type or switch categories.
+* **Complete Vehicle Fleet Management:** Authorized users can effortlessly scale up the system by using the dedicated "Add Car" module to upload new premium fleet vehicles with images, descriptions, pricing, and locations.
+* **Fully Responsive UI/UX (Mobile & Desktop):** Tailored grid systems built with Tailwind CSS and modern styling blocks, ensuring absolute visual elegance on smartphones, tablets, and large desktop screens.
+* **Animated Interactivity & Modern UI Components:** Smooth interactive transitions powered by `framer-motion` on main sections like the Hero Banner, paired with crisp components and premium web icon integration (`react-icons`).
+* **Robust Secure Middleware Protection:** Secure navigation routing implemented through custom Next.js edge-middleware, protecting sensitive internal views like booking states and private user profiles from unauthenticated visits.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🛠️ Technologies & Frameworks Used
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Frontend:** Next.js (App Router), React, Tailwind CSS, Framer Motion
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB Atlas
+- **Icons & UI Elements:** React Icons (`lu` suite), HeroUI / NextUI
+- **Deployment & Hosting:** Vercel (Client & Server)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🚀 Getting Started Locally
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+To get a local copy up and running, follow these simple installation steps:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Prerequisites
+Make sure you have Node.js installed on your machine.
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/your-username/drivefleet.git](https://github.com/your-username/drivefleet.git)
+   cd drivefleet

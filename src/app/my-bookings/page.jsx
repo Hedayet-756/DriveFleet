@@ -53,10 +53,17 @@ const MyBookingsPage = async () => {
     return (
         <div className="min-h-screen bg-slate-50/50 py-10">
             <div className="w-11/12 max-w-4xl mx-auto">
-
-                <div className="mb-8 relative border-b border-slate-100 pb-5">
-                    <h1 className="text-3xl font-bold font-serif text-slate-900 mb-1">My Bookings</h1>
-                    <p className="text-sm text-slate-500">Manage and view your upcoming travel plans</p>
+                <div className="flex justify-between">
+                    <div className="mb-8 relative border-b border-slate-100 pb-5">
+                        <h1 className="text-3xl font-bold font-serif text-slate-900 mb-1">My Bookings</h1>
+                        <p className="text-sm text-slate-500">Manage and view your upcoming travel plans</p>
+                    </div>
+                    <div className="flex-shrink-0 self-start md:self-auto">
+                        <div className="inline-flex items-center gap-2 bg-slate-900 text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider shadow-sm">
+                            <LuCar className="text-sm text-[#1ca0bc]" />
+                            Total Booked: <span className="text-[#1ca0bc] font-extrabold text-sm ml-0.5">{bookings.length}</span>
+                        </div>
+                    </div>
                 </div>
 
                 {!Array.isArray(bookings) || bookings.length === 0 ? (

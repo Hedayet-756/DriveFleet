@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { LuCheck, LuCalendarDays, LuClock } from 'react-icons/lu';
+import { LuCheck, LuCalendarDays, LuClock, LuUserCheck } from 'react-icons/lu';
 import { authClient } from '@/lib/auth-client';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
@@ -16,6 +16,11 @@ const BookingCard = ({ carData }) => {
 
     const [bookingDate, setBookingDate] = useState('');
     const [bookingHour, setBookingHour] = useState('09:00 AM');
+    const [needDriver, setNeedDriver] = useState('no');
+
+    const basePrice = Number(dailyPrice) || 0;
+    const driverFee = needDriver === 'yes' ? basePrice * 0.30 : 0;
+    const calculatedDailyPrice = basePrice + driverFee;
 
     const handleBooking = async () => {
         if (!user) {
@@ -38,10 +43,11 @@ const BookingCard = ({ carData }) => {
             userImage: user?.image || "",
             carId: _id,
             carName,
-            price: dailyPrice,
+            price: calculatedDailyPrice,
             imageUrl,
             pickupLocation,
-            departureDateTime: combinedDateTime
+            departureDateTime: combinedDateTime,
+            hasDriver: needDriver === 'yes'
         };
 
         try {
@@ -130,6 +136,21 @@ const BookingCard = ({ carData }) => {
                                     {hour}
                                 </option>
                             ))}
+                        </select>
+                    </div>
+                </div>
+                <div className="space-y-1.5">
+                    <label className="text-slate-700 font-bold text-xs uppercase tracking-wider flex items-center gap-2 pl-1">
+                        <LuUserCheck className="text-cyan-500 text-sm" /> Need Professional Driver
+                    </label>
+                    <div className="rounded-xl border border-slate-200 shadow-inner bg-slate-50/50 p-3 flex items-center justify-between focus-within:border-cyan-500 focus-within:ring-1 focus-within:ring-cyan-500/20 transition-all">
+                        <select
+                            value={needDriver}
+                            onChange={(e) => setNeedDriver(e.target.value)}
+                            className="text-slate-800 font-bold text-sm outline-none w-full bg-transparent cursor-pointer"
+                        >
+                            <option value="no" className="text-slate-800 font-medium bg-white">No, I will drive ($0.00)</option>
+                            <option value="yes" className="text-slate-800 font-medium bg-white">Yes, need professional driver (+30% Fee)</option>
                         </select>
                     </div>
                 </div>

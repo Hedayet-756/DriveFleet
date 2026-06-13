@@ -13,7 +13,7 @@ const CarsContainer = ({ initialCars = [] }) => {
     const filteredCars = initialCars.filter((car) => {
         const matchesSearch =
             car.carName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            car.brand?.toLowerCase().includes(searchQuery.toLowerCase());
+            car.carType?.toLowerCase().includes(searchQuery.toLowerCase());
 
         // ট্রিম (Trim) করে চেক করা যাতে কোনো এক্সট্রা স্পেসের জন্য ফিল্টার মিস না হয়
         const carCategory = car.category?.toLowerCase().trim();

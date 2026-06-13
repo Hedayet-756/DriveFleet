@@ -2,6 +2,7 @@
 import { Separator, Button } from "@heroui/react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Banner = () => {
     const images = [
@@ -65,28 +66,27 @@ const Banner = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/60 pointer-events-none z-10" />
 
             <motion.div
-                className="p-10 text-center flex justify-center flex-col items-center gap-3.5 flex-1 mt-24 z-20"
+                className="p-2 md:p-10 text-center flex justify-center flex-col items-center gap-3.5 flex-1 mt-24 z-20"
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
             >
-                <motion.h1 className="text-7xl font-bold text-cyan-400" variants={itemVariants}>
+                <motion.h1 className="text-xl md:text-7xl font-bold text-cyan-400" variants={itemVariants}>
                     Make your <br /> Dreams Come True
                 </motion.h1>
 
-                <motion.p className="text-2xl text-white max-w-3xl drop-shadow-md" variants={itemVariants}>
+                <motion.p className="text-sm md:text-2xl text-white max-w-3xl drop-shadow-md" variants={itemVariants}>
                     Rent the perfect ride, explore breathtaking destinations, and create
                     unforgettable memories with our premium fleet.
                 </motion.p>
 
-                <motion.div href="/All-Car" className="flex gap-5" variants={itemVariants}>
+                <Link href="/All-Car" className="flex gap-5">
                     <motion.div variants={buttonHover} whileHover="hover">
-                        <Button size="lg" className="bg-cyan-500 text-white font-semibold rounded-none cursor-pointer px-6 py-3">
+                        <Button size="lg" className="bg-cyan-500 text-white font-semibold rounded-none cursor-pointer px-6 py-1.5 md:py-3">
                             Explore Now
                         </Button>
                     </motion.div>
-
-                </motion.div>
+                </Link>
             </motion.div>
             <div className="bg-white/10 backdrop-blur-md flex justify-between gap-5 w-full items-center z-20 border-t border-white/10">
                 <div className="px-3 py-2">

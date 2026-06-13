@@ -113,7 +113,7 @@ const CarsCard = ({ car, index = 0 }) => {
                             whileTap={{ scale: 0.98 }}
                             className="w-full bg-cyan-400 text-cyan-950 font-bold py-3 px-4 rounded-xl shadow-md shadow-cyan-100 cursor-pointer text-center text-sm"
                         >
-                            Rent Now
+                            Book Now
                         </motion.button>
                     </Link>
                 </div>
